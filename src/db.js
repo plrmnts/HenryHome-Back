@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const DB_NAME = process.env.DB_NAME || "henryhome";
 const DB_USER = process.env.DB_USER || "postgres";
-const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
+const DB_PASSWORD = process.env.DB_PASSWORD || "postgre";
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: "localhost",
@@ -53,6 +53,8 @@ Housing.belongsTo(Location);
 Order.hasOne(Reservations);
 Reservations.belongsTo(Order);
 
+UserMod.hasMany(Housing)
+Housing.belongsTo(UserMod)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
