@@ -48,12 +48,10 @@ Housing.belongsToMany(Servicies,{through: "Housing_Servicies"})
 Servicies.belongsToMany(Housing,{through: "Housing_Servicies"})
 
 Location.hasMany(Housing);
-Housing.hasOne(Location);
+Housing.belongsTo(Location);
 
 Order.hasOne(Reservations);
-Reservations.hasOne(Order);
-
-
+Reservations.belongsTo(Order);
 
 
 module.exports = {
