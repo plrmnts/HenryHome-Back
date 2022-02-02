@@ -47,8 +47,18 @@ const updateHouse = async (req, res) => {
   res.send("updateHouse");
 };
 
-const deleteHouse = (req, res) => {
-  res.send("deleteHouse");
+const deleteHouse = async (req, res) => {
+  const {id} = req.body
+  try {
+    const house = await Housing.destroy({
+      where: {
+        id
+      }
+    })
+    res.json({ msg: "Successfully deleted" });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
