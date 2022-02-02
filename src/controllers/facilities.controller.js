@@ -1,14 +1,19 @@
 const { Facilities } = require('../db')
+const { facilitiesArray } = require('../config_db/facilities.array')
 
 const createFacilitie = async (req,res)=>{
     const { name } = req.body
     try{
-        const newFacilitie =  await Facilities.findOrCreate({
-            where:{
-                name:name.toLowerCase()
-            }
+        const arr = []
+        facilitiesArray.forEach(async (f)=>{
+            const newFacilitie = await Facilities.findOrCreate({
+                where:{
+                    name:f.toLowerCase()
+                }
+            })    
+            arr.push(newFacilitie)
         })
-        res.status(200).json(newFacilitie)
+        res.status(200).json(arr)
     }catch(err){
         console.log(err)
     }
