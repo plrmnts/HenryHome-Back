@@ -1,10 +1,10 @@
 const { Servicies } = require("../db");
-const create = async (req, res) => {
+const createServ = async (req, res) => {
     const{name}= req.body
 try{
     const service = await Servicies.findOrCreate({where:{name: name.toLowerCase()}})    
 
-    res.status(200).send(service);}catch(err){
+    res.status(201).json(service);}catch(err){
         console.log(err)
     }
   };
@@ -12,10 +12,10 @@ try{
   const getServ = async (req, res) => {
     try{
     const services = await Servicies.findAll()
-    res.send(services);}catch(err){
+    res.json(services);}catch(err){
         res.status(404).json(err)
     }
   };
   
-  module.exports = { create, getServ };
+  module.exports = { createServ, getServ };
   ;

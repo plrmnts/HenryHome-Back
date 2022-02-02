@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const {
-  create,
+  createServ,
   getServ,
-} = require("../controllers/servicies.controller.js");
+} = require("../controllers/services.controller.js");
 
 const router = Router()
 
 router.get("/", getServ);
-router.post("/", create);
+router.post("/", createServ);
 
 
 
