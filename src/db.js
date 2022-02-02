@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-
 const DB_NAME = process.env.DB_NAME || "henryhome";
 const DB_USER = process.env.DB_USER || "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
@@ -39,9 +38,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Post, User } = sequelize.models;
+const { Facilities, Housing , Location, Order, Reservations, Servicies, UserAdmin, UserClient, UserMod  } = sequelize.models;
 
-// Aca vendrian las relaciones
+//relaciones
+Housing.belongsToMany(Facilities,{through: "Housing_Facilities"})
+Facilities.belongsToMany(Housing,{through: "Housing_Facilities"})
+
+Housing.belongsToMany(Servicies,{through: "Housing_Servicies"})
+Servicies.belongsToMany(Housing,{through: "Housing_Servicies"})
 
 
 module.exports = {
