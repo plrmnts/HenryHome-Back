@@ -1,6 +1,6 @@
 const { Servicies } = require("../db");
 const create = async (req, res) => {
-    const{name}= req.query
+    const{name}= req.body
 try{
     const service = await Servicies.findOrCreate({where:{name: name.toLowerCase()}})    
 
