@@ -47,6 +47,12 @@ Facilities.belongsToMany(Housing,{through: "Housing_Facilities"})
 Housing.belongsToMany(Servicies,{through: "Housing_Servicies"})
 Servicies.belongsToMany(Housing,{through: "Housing_Servicies"})
 
+Location.hasMany(Housing);
+Housing.hasOne(Location);
+
+
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
