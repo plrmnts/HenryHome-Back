@@ -50,6 +50,8 @@ Servicies.belongsToMany(Housing,{through: "Housing_Servicies"})
 Location.hasMany(Housing);
 Housing.hasOne(Location);
 
+Order.hasOne(Reservations);
+Reservations.hasOne(Order);
 
 
 
