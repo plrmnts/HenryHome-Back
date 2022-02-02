@@ -12,7 +12,7 @@ const router = Router()
 router.get("/", getHouses);
 router.get("/:id", getHouseById)
 router.post("/", createHouse)
-router.delete("/", updateHouse)
-router.patch("/", deleteHouse)
+router.patch("/", updateHouse)
+router.delete("/", deleteHouse)
 
 module.exports = router

@@ -15,8 +15,20 @@ const getHouses = async (req, res) => {
   }
 };
 
-const getHouseById = (req, res) => {
-  res.send("getHouseById");
+const getHouseById = async (req, res) => {
+  const {id} = req.params
+  try {
+    const Houses = await Housing.findByPk(id,{
+      include: [
+        { model: Location },
+        { model: Facilities },
+        { model: Servicies },
+      ],
+    });
+    res.json(Houses);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 
@@ -47,8 +59,18 @@ const updateHouse = async (req, res) => {
   res.send("updateHouse");
 };
 
-const deleteHouse = (req, res) => {
-  res.send("deleteHouse");
+const deleteHouse = async (req, res) => {
+  const {id} = req.body
+  try {
+    const house = await Housing.destroy({
+      where: {
+        id
+      }
+    })
+    res.json({ msg: "Successfully deleted" });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {

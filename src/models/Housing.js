@@ -30,5 +30,8 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue: "Pending",
     },
+    images: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
   });
 };
