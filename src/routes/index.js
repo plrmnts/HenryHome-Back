@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const user = require('./user.route.js')
 const house = require('./house.route.js')
-const facilities = require('./facilities.route')
-const servicies = require('./servicies.route')
+const facilities = require('./facilities.route.js')
+const servicies = require('./servicies.route.js')
 
 const router = Router()
 
