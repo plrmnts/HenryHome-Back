@@ -47,13 +47,11 @@ Facilities.belongsToMany(Housing,{through: "Housing_Facilities"})
 Housing.belongsToMany(Servicies,{through: "Housing_Servicies"})
 Servicies.belongsToMany(Housing,{through: "Housing_Servicies"})
 
-Location.hasMany(Housing);
-Housing.hasOne(Location);
+// Location.hasMany(Housing);
+// Housing.hasOne(Location);
 
-Order.hasOne(Reservations);
-Reservations.hasOne(Order);
-
-
+// Order.hasOne(Reservations);
+// Reservations.hasOne(Order);
 
 
 module.exports = {
