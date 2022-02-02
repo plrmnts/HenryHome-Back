@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
         defaulValue: "Moderator",
       },
       houses: {
-        type: DataTypes.ARRAY(DataTypes.JSON),
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
     },
     { timestamps: false }
