@@ -1,4 +1,4 @@
-const { Housing, Location, Facilities, Servicies } = require("../db");
+const { Housing, Location, Facilities, Services } = require("../db");
 
 const getHouses = async (req, res) => {
   try {
@@ -6,7 +6,7 @@ const getHouses = async (req, res) => {
       include: [
         { model: Location },
         { model: Facilities },
-        { model: Servicies },
+        { model: Services },
       ],
     });
     res.json(Houses);
@@ -22,7 +22,7 @@ const getHouseById = async (req, res) => {
       include: [
         { model: Location },
         { model: Facilities },
-        { model: Servicies },
+        { model: Services },
       ],
     });
     res.json(Houses);
@@ -33,8 +33,16 @@ const getHouseById = async (req, res) => {
 
 
 const createHouse = async (req, res) => {
-  const { name, pricePerNight, numberOfPeople, description, houseRules, images } =
-    req.body;
+  const {
+    name,
+    pricePerNight,
+    numberOfPeople,
+    description,
+    houseRules,
+    images,
+    services,
+    facilities,
+  } = req.body;
   try {
     const [house, status] = await Housing.findOrCreate({
       where: {
@@ -49,6 +57,15 @@ const createHouse = async (req, res) => {
       },
     });
     
+     let servicesDB = await Services.findAll({
+       where: { name: services },
+     });
+     let facilitiesDB = await Facilities.findAll({
+       where: { name: facilities },
+     });
+
+     await house.addServices(servicesDB);
+     await house.addFacilities(facilitiesDB);
 
     res.status(201).json(house);
   } catch (error) {
