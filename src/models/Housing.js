@@ -7,13 +7,14 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      unique:true
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     pricePerNight: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     numberOfPeople: {
