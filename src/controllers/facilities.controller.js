@@ -13,7 +13,12 @@ const createFacilitie = async (req,res)=>{
             })    
             arr.push(newFacilitie)
         })
-        res.status(200).json(arr)
+
+        
+        if(name){
+            const facilitie = await Facilities.findOrCreate({where:{name: name.toLowerCase()}})    
+        
+            res.status(201).json(facilitie)}
     }catch(err){
         console.log(err)
     }
