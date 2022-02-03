@@ -6,13 +6,25 @@ const DB_NAME = process.env.DB_NAME || "henryhome";
 const DB_USER = process.env.DB_USER || "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "postgre";
 
-
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: "localhost",
-  dialect: "postgres",
-  native: false,
-  logging: false,
-});
+console.log(process.env.NODE_ENV, 'Node_ENV');
+let sequelize;
+if (process.env.NODE_ENV === "production") {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+      ssl: {
+        require: true, // This will help you. But you will see nwe error
+        rejectUnauthorized: false, // This line will fix new error
+      },
+    },
+  });
+} else {
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    host: "localhost",
+    dialect: "postgres",
+    native: false,
+    logging: false,
+  });
+}
 
 const basename = path.basename(__filename);
 
@@ -39,14 +51,24 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Facilities, Housing , Location, Order, Reservations, Services, UserAdmin, UserClient, UserMod  } = sequelize.models;
+const {
+  Facilities,
+  Housing,
+  Location,
+  Order,
+  Reservations,
+  Services,
+  UserAdmin,
+  UserClient,
+  UserMod,
+} = sequelize.models;
 
 //relaciones
-Housing.belongsToMany(Facilities,{through: "Housing_Facilities"})
-Facilities.belongsToMany(Housing,{through: "Housing_Facilities"})
+Housing.belongsToMany(Facilities, { through: "Housing_Facilities" });
+Facilities.belongsToMany(Housing, { through: "Housing_Facilities" });
 
-Housing.belongsToMany(Services,{through: "Housing_Services"})
-Services.belongsToMany(Housing,{through: "Housing_Services"})
+Housing.belongsToMany(Services, { through: "Housing_Services" });
+Services.belongsToMany(Housing, { through: "Housing_Services" });
 
 /* Housing.hasOne(Location)
 Location.belongsTo(Housing); */
@@ -57,8 +79,8 @@ Housing.belongsTo(Location);
 Order.hasOne(Reservations);
 Reservations.belongsTo(Order);
 
-UserMod.hasMany(Housing)
-Housing.belongsTo(UserMod)
+UserMod.hasMany(Housing);
+Housing.belongsTo(UserMod);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
