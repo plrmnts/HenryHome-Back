@@ -58,7 +58,7 @@ const createHouse = async (req, res) => {
         images,
       },
     });
-    
+
      let servicesDB = await Services.findAll({
        where: { name: services },
      });
@@ -70,9 +70,8 @@ const createHouse = async (req, res) => {
 
      await house.addServices(servicesDB);
      await house.addFacilities(facilitiesDB);
-     await house.setLocation(location)
+    await house.setLocation(location)
   
-
     res.status(201).json(house);
   } catch (error) {
     console.log(error);
