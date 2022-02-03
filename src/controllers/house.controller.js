@@ -33,7 +33,7 @@ const getHouseById = async (req, res) => {
 
 
 const createHouse = async (req, res) => {
-  const { name, pricePerNight, numberOfPeople, description, houseRules } =
+  const { name, pricePerNight, numberOfPeople, description, houseRules, images } =
     req.body;
   try {
     const [house, status] = await Housing.findOrCreate({
@@ -45,6 +45,7 @@ const createHouse = async (req, res) => {
         numberOfPeople,
         description,
         houseRules,
+        images,
       },
     });
     
@@ -56,7 +57,34 @@ const createHouse = async (req, res) => {
 };
 
 const updateHouse = async (req, res) => {
-  res.send("updateHouse");
+  const { name, pricePerNight, numberOfPeople, description, houseRules, images, id, status } = req.body
+  try{
+    if(status){
+     await Housing.update({status: status }, {
+        where: {
+          id: id
+        }
+      });
+    }
+    await Housing.update({
+      name,
+      pricePerNight,
+      numberOfPeople,
+      description,
+      houseRules,
+      images,
+    
+    }, {
+      where: {
+        id: id
+      }
+    });
+    const resp = await Housing.findAll({where:{id:id}})
+    
+    res.status(200).send(resp);
+  } catch(error){console.log(error)}
+
+  
 };
 
 const deleteHouse = async (req, res) => {
