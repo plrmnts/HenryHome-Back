@@ -14,6 +14,10 @@ server.use(morgan("dev"));
 server.use(cors());
 
 // Initial route
+server.get("/",(req,res)=>{
+    res.send("Henry Home Api")
+})
+
 server.use("/api", routes);
 
 module.exports = server;
