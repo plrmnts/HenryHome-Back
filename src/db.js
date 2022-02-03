@@ -48,6 +48,9 @@ Facilities.belongsToMany(Housing,{through: "Housing_Facilities"})
 Housing.belongsToMany(Services,{through: "Housing_Services"})
 Services.belongsToMany(Housing,{through: "Housing_Services"})
 
+/* Housing.hasOne(Location)
+Location.belongsTo(Housing); */
+
 Location.hasMany(Housing);
 Housing.belongsTo(Location);
 

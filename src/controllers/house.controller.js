@@ -42,7 +42,9 @@ const createHouse = async (req, res) => {
     images,
     services,
     facilities,
+    location
   } = req.body;
+  console.log(location);
   try {
     const [house, status] = await Housing.findOrCreate({
       where: {
@@ -64,10 +66,12 @@ const createHouse = async (req, res) => {
        where: { name: facilities },
      });
 
+
+
      await house.addServices(servicesDB);
      await house.addFacilities(facilitiesDB);
-     
-
+    await house.setLocation(location)
+  
     res.status(201).json(house);
   } catch (error) {
     console.log(error);
