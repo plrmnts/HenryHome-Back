@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     pricePerNight: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     numberOfPeople: {
