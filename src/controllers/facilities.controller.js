@@ -25,7 +25,6 @@ const getFacilities = async (req,res)=>{
                 }
             })    
         })
-
         const facilities = await Facilities.findAll()
         res.status(200).json(facilities)
     }catch(err){

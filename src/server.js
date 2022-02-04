@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const cors = require("cors");
+const { serverPreparation } = require("./libs/serverPreparation.js");
 
 const server = express();
 
@@ -14,7 +15,8 @@ server.use(morgan("dev"));
 server.use(cors());
 
 // Initial route
-server.get("/",(req,res)=>{
+server.get("/",async (req,res)=>{
+    await serverPreparation()
     res.send("Henry Home Api")
 })
 
