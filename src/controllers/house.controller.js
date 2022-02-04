@@ -1,4 +1,4 @@
-const { Housing, Location, Facilities, Services, UserMod  } = require("../db");
+const { Housing, Location, Facilities, Services, UserMod } = require("../db");
 
 const getHouses = async (req, res, next) => {
   try {
@@ -7,34 +7,33 @@ const getHouses = async (req, res, next) => {
         { model: Location },
         { model: Facilities },
         { model: Services },
-        { model: UserMod},
+        { model: UserMod, attributes: ["id", "email"] },
       ],
     });
     res.json(Houses);
   } catch (error) {
     console.log(error);
-    next()
+    next(error);
   }
 };
 
 const getHouseById = async (req, res, next) => {
-  const {id} = req.params
+  const { id } = req.params;
   try {
-    const Houses = await Housing.findByPk(id,{
+    const Houses = await Housing.findByPk(id, {
       include: [
         { model: Location },
         { model: Facilities },
         { model: Services },
-        { model: UserMod},
+        { model: UserMod },
       ],
     });
     res.json(Houses);
   } catch (error) {
     console.log(error);
-     next()
+    next(error);
   }
 };
-
 
 const createHouse = async (req, res, next) => {
   const {
@@ -47,7 +46,7 @@ const createHouse = async (req, res, next) => {
     services,
     facilities,
     location,
-    User_id
+    User_id,
   } = req.body;
   try {
     const [house, status] = await Housing.findOrCreate({
@@ -63,69 +62,83 @@ const createHouse = async (req, res, next) => {
       },
     });
 
-     let servicesDB = await Services.findAll({
-       where: { name: services },
-     });
-     let facilitiesDB = await Facilities.findAll({
-       where: { name: facilities },
-     });
+    let servicesDB = await Services.findAll({
+      where: { name: services },
+    });
+    let facilitiesDB = await Facilities.findAll({
+      where: { name: facilities },
+    });
 
+    await house.addServices(servicesDB);
+    await house.addFacilities(facilitiesDB);
+    await house.setLocation(location);
+    await house.setUserMod(User_id);
 
-
-     await house.addServices(servicesDB);
-     await house.addFacilities(facilitiesDB);
-     await house.setLocation(location)
-     await house.setUserMod(User_id)
-    
     res.status(201).json(house);
   } catch (error) {
-     next(error);
+    console.log(error);
+    next(error);
   }
 };
 
 const updateHouse = async (req, res, next) => {
-  const { name, pricePerNight, numberOfPeople, description, houseRules, images, id, status } = req.body
-  try{
-    if(status){
-     await Housing.update({status: status }, {
-        where: {
-          id: id
+  const {
+    name,
+    pricePerNight,
+    numberOfPeople,
+    description,
+    houseRules,
+    images,
+    id,
+    status,
+  } = req.body;
+  try {
+    if (status) {
+      await Housing.update(
+        { status: status },
+        {
+          where: {
+            id: id,
+          },
         }
-      });
+      );
     }
-    await Housing.update({
-      name,
-      pricePerNight,
-      numberOfPeople,
-      description,
-      houseRules,
-      images,
-    
-    }, {
-      where: {
-        id: id
+    await Housing.update(
+      {
+        name,
+        pricePerNight,
+        numberOfPeople,
+        description,
+        houseRules,
+        images,
+      },
+      {
+        where: {
+          id: id,
+        },
       }
-    });
-    const resp = await Housing.findAll({where:{id:id}})
-    
-    res.status(200).send(resp);
-  } catch(error){console.log(error)}
+    );
+    const resp = await Housing.findAll({ where: { id: id } });
 
-  
+    res.status(200).send(resp);
+  } catch (error) {
+   console.log(error);
+   next(error);
+  }
 };
 
 const deleteHouse = async (req, res, next) => {
-  const {id} = req.body
+  const { id } = req.body;
   try {
     const house = await Housing.destroy({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
     res.json({ msg: "Successfully deleted" });
   } catch (error) {
-    console.log(error);
-     next()
+   console.log(error);
+   next(error);
   }
 };
 
