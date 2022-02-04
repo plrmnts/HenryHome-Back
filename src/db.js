@@ -6,7 +6,6 @@ const DB_NAME = process.env.DB_NAME || "henryhome";
 const DB_USER = process.env.DB_USER || "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "postgre";
 
-console.log(process.env.NODE_ENV, 'Node_ENV');
 let sequelize;
 if (process.env.NODE_ENV === "production") {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -64,23 +63,35 @@ const {
 } = sequelize.models;
 
 //relaciones
-Housing.belongsToMany(Facilities, { through: "Housing_Facilities" });
-Facilities.belongsToMany(Housing, { through: "Housing_Facilities" });
+Housing.belongsToMany(
+  Facilities,
+  { through: "Housing_Facilities", timestamps: false }
 
-Housing.belongsToMany(Services, { through: "Housing_Services" });
-Services.belongsToMany(Housing, { through: "Housing_Services" });
+);
+Facilities.belongsToMany(Housing, {
+  through: "Housing_Facilities",
+  timestamps: false,
+});
 
-/* Housing.hasOne(Location)
-Location.belongsTo(Housing); */
+Housing.belongsToMany(
+  Services,
+  { through: "Housing_Services", timestamps: false  },
+ 
+);
+Services.belongsToMany(
+  Housing,
+  { through: "Housing_Services" , timestamps: false },
+ 
+);
 
-Location.hasMany(Housing);
-Housing.belongsTo(Location);
+Location.hasMany(Housing, { timestamps: false });
+Housing.belongsTo(Location, { timestamps: false });
 
-Order.hasOne(Reservations);
-Reservations.belongsTo(Order);
+Order.hasOne(Reservations, { timestamps: false });
+Reservations.belongsTo(Order, { timestamps: false });
 
-UserMod.hasMany(Housing);
-Housing.belongsTo(UserMod);
+UserMod.hasMany(Housing, { timestamps: false });
+Housing.belongsTo(UserMod), { timestamps: false };
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
