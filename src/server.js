@@ -15,19 +15,20 @@ server.use(morgan("dev"));
 server.use(cors());
 
 // Initial route
-server.get("/",async (req,res)=>{
-    await serverPreparation()
-    res.send("Henry Home Api")
-})
+server.get("/", async (req, res) => {
+  await serverPreparation();
+  res.send("Henry Home Api");
+});
 
 server.use("/api", routes);
 
 // Error catching endware.
-server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+server.use((err, req, res, next) => {
+  console.log("SIIIIIIIIIIIIIIIIIIII");
   console.log(err, "Error catching endware.");
   const status = err.status || 500;
   const message = err.message || err;
-  return res.status(status).send(message)
+  return res.status(status).send(message);
 });
 
 module.exports = server;

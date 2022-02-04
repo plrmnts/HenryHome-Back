@@ -79,8 +79,7 @@ const createHouse = async (req, res, next) => {
     
     res.status(201).json(house);
   } catch (error) {
-    console.log(error);
-     next()
+     next(error);
   }
 };
 
