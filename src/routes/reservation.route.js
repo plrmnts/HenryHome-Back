@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { createReservation } = require('../controllers/reservation')
+const { createReservation } = require('../controllers/reservation.controller')
 
 router.post('/',createReservation)
 
