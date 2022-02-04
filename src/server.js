@@ -24,7 +24,6 @@ server.use("/api", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
-  console.log("SIIIIIIIIIIIIIIIIIIII");
   console.log(err, "Error catching endware.");
   const status = err.status || 500;
   const message = err.message || err;
