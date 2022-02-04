@@ -70,5 +70,16 @@ const register = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+const getUserById = async(req,res)=>{
+  const {id, role} = req.params
 
-module.exports = { login, register };
+  const User= await userRoles[role].findOne({
+    where: {
+      id: id
+    },
+  }); 
+
+  res.status(200).json(User)
+}
+
+module.exports = { login, register,getUserById };
