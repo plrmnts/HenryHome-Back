@@ -1,4 +1,4 @@
-const { Housing, Location, Facilities, Services } = require("../db");
+const { Housing, Location, Facilities, Services, UserMod  } = require("../db");
 
 const getHouses = async (req, res) => {
   try {
@@ -7,6 +7,7 @@ const getHouses = async (req, res) => {
         { model: Location },
         { model: Facilities },
         { model: Services },
+        { model: UserMod},
       ],
     });
     res.json(Houses);
@@ -23,6 +24,7 @@ const getHouseById = async (req, res) => {
         { model: Location },
         { model: Facilities },
         { model: Services },
+        { model: UserMod},
       ],
     });
     res.json(Houses);
@@ -42,7 +44,8 @@ const createHouse = async (req, res) => {
     images,
     services,
     facilities,
-    location
+    location,
+    User_id
   } = req.body;
   console.log(location);
   try {
@@ -70,8 +73,9 @@ const createHouse = async (req, res) => {
 
      await house.addServices(servicesDB);
      await house.addFacilities(facilitiesDB);
-    await house.setLocation(location)
-  
+     await house.setLocation(location)
+     await house.setUserMod(User_id)
+    
     res.status(201).json(house);
   } catch (error) {
     console.log(error);
