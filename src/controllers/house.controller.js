@@ -68,11 +68,11 @@ const createHouse = async (req, res, next) => {
     let facilitiesDB = await Facilities.findAll({
       where: { name: facilities },
     });
-
+   
     await house.addServices(servicesDB);
     await house.addFacilities(facilitiesDB);
     await house.setLocation(location);
-    await house.setUserMod(User_id);
+    await house.setUserMod(req.userId);
 
     res.status(201).json(house);
   } catch (error) {

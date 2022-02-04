@@ -27,7 +27,7 @@ const login = async (req, res) => {
        return res.status(400).json({ message: "Invalid credentials" });
      const token = jwt.sign(
        { email: existingUser.email, id: existingUser._id },
-       "test",
+       "test", //Deberia ser una palabra secreta
        { expiresIn: "1h" }
      );
      res.status(200).json({ result:existingUser, token });
@@ -60,10 +60,10 @@ const register = async (req, res) => {
       rol: role,
     });
     console.log(result);
-    const token = jwt.sign({ email: result.email, id: result._id }, "test", {
-      expiresIn: "24h",
+    const token = jwt.sign({ email: result.email, id: result.id }, "test" //Deberia ser una palabra secreta
+    , {expiresIn: "24h",
     });
-
+    
     res.status(200).json({ result, token });
   } catch (error) {
     console.log(error);
