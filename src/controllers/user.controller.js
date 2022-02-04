@@ -39,7 +39,9 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName, role } =
     req.body;
+    
   try {
+    
     const existingUser = await userRoles[role].findOne({
       where: {
         email,
