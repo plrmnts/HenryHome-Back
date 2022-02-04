@@ -22,4 +22,12 @@ server.get("/",async (req,res)=>{
 
 server.use("/api", routes);
 
+// Error catching endware.
+server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  console.log(err, "Error catching endware.");
+  const status = err.status || 500;
+  const message = err.message || err;
+  return res.status(status).send(message)
+});
+
 module.exports = server;

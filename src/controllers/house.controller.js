@@ -1,6 +1,6 @@
 const { Housing, Location, Facilities, Services, UserMod  } = require("../db");
 
-const getHouses = async (req, res) => {
+const getHouses = async (req, res, next) => {
   try {
     const Houses = await Housing.findAll({
       include: [
@@ -13,10 +13,11 @@ const getHouses = async (req, res) => {
     res.json(Houses);
   } catch (error) {
     console.log(error);
+    next()
   }
 };
 
-const getHouseById = async (req, res) => {
+const getHouseById = async (req, res, next) => {
   const {id} = req.params
   try {
     const Houses = await Housing.findByPk(id,{
@@ -30,11 +31,12 @@ const getHouseById = async (req, res) => {
     res.json(Houses);
   } catch (error) {
     console.log(error);
+     next()
   }
 };
 
 
-const createHouse = async (req, res) => {
+const createHouse = async (req, res, next) => {
   const {
     name,
     pricePerNight,
@@ -47,7 +49,6 @@ const createHouse = async (req, res) => {
     location,
     User_id
   } = req.body;
-  console.log(location);
   try {
     const [house, status] = await Housing.findOrCreate({
       where: {
@@ -79,10 +80,11 @@ const createHouse = async (req, res) => {
     res.status(201).json(house);
   } catch (error) {
     console.log(error);
+     next()
   }
 };
 
-const updateHouse = async (req, res) => {
+const updateHouse = async (req, res, next) => {
   const { name, pricePerNight, numberOfPeople, description, houseRules, images, id, status } = req.body
   try{
     if(status){
@@ -113,7 +115,7 @@ const updateHouse = async (req, res) => {
   
 };
 
-const deleteHouse = async (req, res) => {
+const deleteHouse = async (req, res, next) => {
   const {id} = req.body
   try {
     const house = await Housing.destroy({
@@ -124,6 +126,7 @@ const deleteHouse = async (req, res) => {
     res.json({ msg: "Successfully deleted" });
   } catch (error) {
     console.log(error);
+     next()
   }
 };
 
