@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      date_End:{
+      date_end:{
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
