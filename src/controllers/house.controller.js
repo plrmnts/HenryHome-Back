@@ -46,7 +46,7 @@ const createHouse = async (req, res, next) => {
     services,
     facilities,
     location,
-    User_id,
+    
   } = req.body;
   try {
     const [house, status] = await Housing.findOrCreate({

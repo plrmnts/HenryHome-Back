@@ -6,13 +6,13 @@ const {
   updateHouse,
   deleteHouse,
 } = require("../controllers/house.controller.js");
-const { veryfyToken } = require("../middleware/auth.js");
+const { veryfyToken, isModerador, isAdmin } = require("../middleware/auth.js");
 
 const router = Router()
 
 router.get("/", getHouses);
 router.get("/:id", getHouseById)
-router.post("/",veryfyToken,createHouse)
+router.post("/",veryfyToken,isModerador,createHouse)
 router.patch("/", updateHouse)
 router.delete("/", deleteHouse)
 
