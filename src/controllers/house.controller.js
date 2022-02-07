@@ -46,7 +46,6 @@ const createHouse = async (req, res, next) => {
     services,
     facilities,
     location,
-    
   } = req.body;
   try {
     const [house, status] = await Housing.findOrCreate({
@@ -68,12 +67,11 @@ const createHouse = async (req, res, next) => {
     let facilitiesDB = await Facilities.findAll({
       where: { name: facilities },
     });
-   
+
     await house.addServices(servicesDB);
     await house.addFacilities(facilitiesDB);
     await house.setLocation(location);
     await house.setUserMod(req.userId);
-    console.log("ACASIU????",req.userId)
 
     res.status(201).json(house);
   } catch (error) {
@@ -93,14 +91,14 @@ const updateHouse = async (req, res, next) => {
     id,
   } = req.body;
   try {
-      console.log("USERIDeste",req.userId)
-      console.log("id",id)
-      
-      const housecheck = await Housing.findOne({where:{id: id}})
-      console.log(housecheck)
-      if(housecheck.userModId===req.userId){
-        console.log("Es el mismo usuario, (no se aplico esta proiedad)")
-      }
+    console.log("USERIDeste", req.userId);
+    console.log("id", id);
+
+    const housecheck = await Housing.findOne({ where: { id: id } });
+    console.log(housecheck);
+    if (housecheck.userModId === req.userId) {
+      console.log("Es el mismo usuario, (no se aplico esta proiedad)");
+    }
     await Housing.update(
       {
         name,
@@ -120,8 +118,8 @@ const updateHouse = async (req, res, next) => {
 
     res.status(200).send(resp);
   } catch (error) {
-   console.log(error);
-   next(error);
+    console.log(error);
+    next(error);
   }
 };
 
@@ -135,27 +133,32 @@ const deleteHouse = async (req, res, next) => {
     });
     res.json({ msg: "Successfully deleted" });
   } catch (error) {
-   console.log(error);
-   next(error);
+    console.log(error);
+    next(error);
   }
 };
-const AdminChangeHousing = async(req, res, next)=>{
-  try{
- const {status, id} = req.body
- await Housing.update(
-  { status: status },
-  {
-    where: {
-      id: id,
-    },
+const AdminChangeHousing = async (req, res, next) => {
+  try {
+    const { status, id } = req.body;
+    const result = await Housing.update(
+      { status: status },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+   
+     result >= 1
+       ? res.status(201).json({ msg: "Successfully changed" })
+       : res.json({ msg: "House not changed" });
+    
+
+  } catch (error) {
+    console.log(error, "errorr");
+    next(error);
   }
-);
-  res.json({msg: "Successfully changed"})
-}catch(error){
-  console.log(error);
-   next(error);
-}
-}
+};
 
 module.exports = {
   getHouses,
