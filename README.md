@@ -28,6 +28,105 @@ npm install
 ```
 npm run dev 
 ```
+# ROUTES
+
+## `USERS`
+
+Routes related to the users
+
+#### `POST` 
+
+```http
+  POST /user/login : Logs user into the system
+```
+
+
+```http
+  POST /user/register : Creates a new user
+```
+---------------
+
+## `HOUSES`
+
+Routes related to the houses
+
+#### `GET`
+
+```http
+  GET /houses : Gets all houses
+```
+
+```http
+  GET /houses/:id : Finds houses by ID
+    req.body = {"id":string}
+```
+
+#### `POST`
+
+```http
+  POST /houses : Creates a new house
+  
+```
+
+#### `PATCH`
+
+```http
+  PATCH /houses : Updates an existing house
+```
+
+#### `DELETE`
+
+```http
+  DELETE /houses : Deletes a house
+```
+
+------------
+
+## `FACILITIES`
+
+Routes related to the facilities
+
+#### `GET`
+
+```http
+  GET /facilities : Gets all facilities
+```
+
+#### `POST`
+
+```http
+  POST /facilities : Creates a new facility
+```
+
+--------------
+
+## `SERVICES`
+
+Routes related to the services
+
+#### `GET`
+
+```http
+  GET /services : Gets all services
+```
+
+#### `POST`
+
+```http
+  POST /facilities : Creates a new service
+```
+
+------
+
+## `LOCATION`
+
+Routes related to the locations
+
+#### `GET`
+
+```http
+  GET /locations : Gets all the locations
+```
 
 
 ## Deploy 🚀
