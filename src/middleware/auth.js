@@ -49,7 +49,6 @@ const isAdmin = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  // next(); Este de aca 
 };
 
 module.exports = { veryfyToken, isModerador, isAdmin };
