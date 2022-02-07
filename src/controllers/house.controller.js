@@ -73,6 +73,7 @@ const createHouse = async (req, res, next) => {
     await house.addFacilities(facilitiesDB);
     await house.setLocation(location);
     await house.setUserMod(req.userId);
+    console.log("ACASIU????",req.userId)
 
     res.status(201).json(house);
   } catch (error) {
@@ -90,19 +91,16 @@ const updateHouse = async (req, res, next) => {
     houseRules,
     images,
     id,
-    status,
   } = req.body;
   try {
-    if (status) {
-      await Housing.update(
-        { status: status },
-        {
-          where: {
-            id: id,
-          },
-        }
-      );
-    }
+      console.log("USERIDeste",req.userId)
+      console.log("id",id)
+      
+      const housecheck = await Housing.findOne({where:{id: id}})
+      console.log(housecheck)
+      if(housecheck.userModId===req.userId){
+        console.log("Es el mismo usuario, (no se aplico esta proiedad)")
+      }
     await Housing.update(
       {
         name,
@@ -141,6 +139,23 @@ const deleteHouse = async (req, res, next) => {
    next(error);
   }
 };
+const AdminChangeHousing = async(req, res, next)=>{
+  try{
+ const {status, id} = req.body
+ await Housing.update(
+  { status: status },
+  {
+    where: {
+      id: id,
+    },
+  }
+);
+  res.json({msg: "Successfully changed"})
+}catch(error){
+  console.log(error);
+   next(error);
+}
+}
 
 module.exports = {
   getHouses,
@@ -148,4 +163,5 @@ module.exports = {
   createHouse,
   updateHouse,
   deleteHouse,
+  AdminChangeHousing,
 };
