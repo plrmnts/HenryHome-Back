@@ -1,5 +1,5 @@
 const { Housing, Location, Facilities, Services, UserMod } = require("../db");
-
+const { buscar } = require("../libs/buscar")
 const getHouses = async (req, res, next) => {
   try {
     const Houses = await Housing.findAll({
@@ -159,7 +159,37 @@ const AdminChangeHousing = async (req, res, next) => {
     next(error);
   }
 };
+const filterHouses = async (req, res, next)=>{
+  const { pricePerNight, numberOfPeople, facilit,serv,loc } =req.body
+  
+  try{
+    var filtro = await Housing.findAll({
+      include: [
+        { model: Location, attributes:["name"] },
+        { model: Facilities,attributes:["name"] },
+        { model: Services,attributes:["name"] },
+        { model: UserMod, attributes: ["id", "email"] },
+      ],
+    });
+    if(pricePerNight){
+      filtro = filtro.filter(e=>e.pricePerNight===pricePerNight)}
+    if(numberOfPeople){
+      filtro = filtro.filter(e=>e.numberOfPeople===numberOfPeople)}
+    if(loc){
+      filtro = filtro.filter(e=>e.dataValues.Location.dataValues.name.toLowerCase()===loc.toLowerCase())}
+    if(facilit){
+    
+      filtro= filtro.filter(e=>buscar(e.dataValues.Facilities,facilit))}
+    if(serv){
+        filtro= filtro.filter(e=>buscar(e.dataValues.Services,serv))}  
 
+res.json(filtro)
+  
+  }catch(error){
+    console.log(error,"Error")
+    next(error)
+  }
+} 
 module.exports = {
   getHouses,
   getHouseById,
@@ -167,4 +197,5 @@ module.exports = {
   updateHouse,
   deleteHouse,
   AdminChangeHousing,
+  filterHouses,
 };
