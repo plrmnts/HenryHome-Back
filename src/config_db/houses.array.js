@@ -1,12 +1,12 @@
 const housesArray = [
   {
     name: "demo1",
-    pricePerNight: 200,
+    pricePerNight: 100,
     numberOfPeople: 3,
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     houseRules: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     services: ["catering", "shops", "room service"],
-    facilities: ["tv", "wifi"],
+    facilities: ["tv", "wifi", "dishwasher"],
     location: 20,
     images: [
       "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
@@ -18,7 +18,7 @@ const housesArray = [
     numberOfPeople: 3,
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     houseRules: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
-    services: ["catering", "shops", "room service"],
+    services: ["catering", "room service"],
     facilities: ["tv", "wifi"],
     location: 20,
     images: [
@@ -27,7 +27,7 @@ const housesArray = [
   },
   {
     name: "demo3",
-    pricePerNight: 200,
+    pricePerNight: 300,
     numberOfPeople: 3,
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     houseRules: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
@@ -72,20 +72,20 @@ const housesArray = [
     houseRules: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     services: ["catering", "shops", "room service"],
     facilities: ["tv", "wifi"],
-    location: 20,
+    location: 10,
     images: [
       "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
     ],
   },
   {
     name: "demo7",
-    pricePerNight: 200,
-    numberOfPeople: 3,
+    pricePerNight: 1000,
+    numberOfPeople: 6,
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     houseRules: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est aut facere et totam voluptas dolorum repellat ullam maxime architecto, obcaecati at maiores facilis minus recusandae perferendis tempore illum rem. Quia.",
     services: ["catering", "shops", "room service"],
-    facilities: ["tv", "wifi"],
-    location: 20,
+    facilities: ["tv", "wifi", "Air conditioning"],
+    location: 15,
     images: [
       "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
     ],

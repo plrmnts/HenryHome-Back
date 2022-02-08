@@ -11,6 +11,7 @@ const getHouses = async (req, res, next) => {
       ],
     });
     res.json(Houses);
+    return Houses;
   } catch (error) {
     console.log(error);
     next(error);
@@ -160,34 +161,37 @@ const AdminChangeHousing = async (req, res, next) => {
   }
 };
 const filterHouses = async (req, res, next)=>{
-  const { pricePerNight, numberOfPeople, facilit,serv,loc } =req.body
+  const { minprice, maxprice, numberofpeople, facilities ,services, location } =req.query;
+  const Houses = await Housing.findAll({
+    include: [
+      { model: Location },
+      { model: Facilities },
+      { model: Services },
+      { model: UserMod, attributes: ["id", "email"] },
+    ],
+  });
   
   try{
-    var filtro = await Housing.findAll({
-      include: [
-        { model: Location, attributes:["name"] },
-        { model: Facilities,attributes:["name"] },
-        { model: Services,attributes:["name"] },
-        { model: UserMod, attributes: ["id", "email"] },
-      ],
-    });
-    if(pricePerNight){
-      filtro = filtro.filter(e=>e.pricePerNight===pricePerNight)}
-    if(numberOfPeople){
-      filtro = filtro.filter(e=>e.numberOfPeople===numberOfPeople)}
-    if(loc){
-      filtro = filtro.filter(e=>e.dataValues.Location.dataValues.name.toLowerCase()===loc.toLowerCase())}
-    if(facilit){
-    
-      filtro= filtro.filter(e=>buscar(e.dataValues.Facilities,facilit))}
-    if(serv){
-        filtro= filtro.filter(e=>buscar(e.dataValues.Services,serv))}  
+    if(minprice && maxprice){
+      //El filtro recibe un precio máximo y uno mínimo por query y muestra los resultados que se encuentran dentro de ese rango
+      const price = await Houses.filter(e => e.pricePerNight > minprice && e.pricePerNight < maxprice)
+      return res.send(price)
+    }
 
-res.json(filtro)
+    if (numberofpeople) {
+      //El filtro recibe por query la cantidad de personas que permite el alojamiento y devuelve los que coinciden con ese número
+      const people = await Houses.filter(e => e.numberOfPeople === Number(numberofpeople))
+      return res.send(people)
+    }
+
+    if (location) {
+      //El filtro recibe el id de la locación y me devuelve como número aquellos resultados que coincidan 
+      const loc = await Houses.filter(e => e.LocationId === Number(location))
+      return res.send(loc)
+    }
   
   }catch(error){
     console.log(error,"Error")
-    next(error)
   }
 } 
 module.exports = {
